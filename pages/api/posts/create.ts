@@ -1,21 +1,23 @@
-import { NextResponse } from "next/server";
-import prisma from "@/app/libs/prismadb";
-import getCurrentUser from "@/app/api/actions/getCurrentUser";
 import { NextApiRequest, NextApiResponse } from "next";
+import prisma from "@/app/libs/prismadb";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
   if (request.method === "POST") {
     try {
-      const bodyRequest = request.body; // Parse JSON directly from request body
-      const { title, body, slug, imageUrl ,userEmail} = bodyRequest;
+      const bodyRequest = request.body; 
+      const { title, body, slug, imageUrl, userEmail, tags } = bodyRequest;
 
       const currentUser = await prisma.user.findFirst({
         where: {
           email: userEmail,
         },
       });
-     // console.log(currentUser + 'sssss');
 
+      if (!currentUser) {
+        return response.status(400).json({ error: "User not found" });
+      }
+
+      // Create the post first
       const post = await prisma.post.create({
         data: {
           title,
@@ -24,14 +26,30 @@ export default async function handler(request: NextApiRequest, response: NextApi
           imageUrl,
           author: {
             connect: {
-              id: currentUser?.id, // Assuming currentUser contains the author's id
+              id: currentUser.id,
             },
-          },
-        },
+          }
+        }
       });
-      
+
+      // Create or connect tags to the post
+      for (let tagName of tags) {
+        const tag = await prisma.tag.upsert({
+          where: { name: tagName },
+          update: {},
+          create: { name: tagName }
+        });
+
+        await prisma.postTag.create({
+          data: {
+            postId: post.id,
+            tagId: tag.id
+          }
+        });
+      }
 
       return response.status(201).json(post);
+
     } catch (error) {
       console.error("Error creating post:", error);
       return response.status(500).json({ error: "Internal server error" });
@@ -40,3 +58,4 @@ export default async function handler(request: NextApiRequest, response: NextApi
     return response.status(405).end();
   }
 }
+

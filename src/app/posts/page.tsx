@@ -15,12 +15,30 @@ const CreatePostPage: React.FC = () => {
       const session = await getSession();
       setSession(session);
       if (!session) {
-        router.push('/api/auth/signin');
+        router.push('/');
       }
     };
     
     fetchSession();
   }, [router]);
+
+  const [tags, setTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchTags = async () => {
+      try {
+        const response = await fetch('/api/tags');
+        const data = await response.json();
+        setTags(data.tags);
+      } catch (error) {
+        console.error('Error fetching tags:', error);
+      }
+    };
+
+    fetchTags();
+  }, []);
+
   
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -41,7 +59,8 @@ const CreatePostPage: React.FC = () => {
         slug,
         imageUrl,
         userEmail: session?.user?.email?.toString(),
-      };
+        tags: selectedTags
+      };      
 
       // Send a POST request to your API route
       const response = await fetch('/api/posts/create', {
@@ -106,6 +125,22 @@ const CreatePostPage: React.FC = () => {
               className="border rounded-md px-4 py-2 w-full h-40"
             />
           </div>
+          <div className="mb-4">
+          <label htmlFor="tags" className="block text-gray-700 font-bold">Tags</label>
+          <select 
+            multiple={true} 
+            id="tags" 
+            value={selectedTags} 
+            onChange={(e) => setSelectedTags(Array.from(e.target.selectedOptions, option => option.value))}
+            className="border rounded-md px-4 py-2 w-full"
+          >
+            {tags.map(tag => (
+              <option key={tag} value={tag}>
+                {tag}
+              </option>
+            ))}
+          </select>
+        </div>
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"

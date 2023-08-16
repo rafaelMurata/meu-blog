@@ -14,13 +14,27 @@ export default async function handler(request: NextApiRequest, response: NextApi
         where: {
           id: postId as string,
         },
+        include: {
+          tags: {
+            include: {
+              tag: true
+            }
+          },
+        },
       });
 
       if (!post) {
         return response.status(404).json({ error: "Post not found" });
       }
+      const processedPost = {
+        ...post,
+        tags: post.tags.map(tagRelation => ({
+          id: tagRelation.tag.id,
+          name: tagRelation.tag.name
+        }))
+      }      
 
-      return response.status(200).json(post);
+      return response.status(200).json(processedPost);
     } catch (error) {
       console.error("Error fetching post:", error);
       return response.status(500).json({ error: "Internal server error" });

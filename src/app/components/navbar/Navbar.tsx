@@ -45,6 +45,7 @@ const Navbar: React.FC<NavbarProps> = ({
             {currentUser && (
               <>
                 <MenuItem label="Create Post" onClick={() => router.push('/posts')} />
+                <MenuItem label="Create tags" onClick={() => router.push('/tags')} />
                 <MenuItem label="Logout" onClick={ ()=> signOut() } />
               </>
             )}

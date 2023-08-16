@@ -51,6 +51,7 @@ model Post {
   authorId String    @db.ObjectId
   createdAt DateTime @default(now())
   comments Comment[]
+  tags    PostTag[]
 }
 
 model Comment {
@@ -58,4 +59,20 @@ model Comment {
   comment String
   post    Post   @relation(fields: [postId], references: [id])
   postId  String @db.ObjectId
+}
+
+model Tag {
+  id      String   @id @default(auto()) @map("_id") @db.ObjectId
+  name    String   @unique
+  posts   PostTag[]
+}
+model PostTag {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  postId String @map("post") @db.ObjectId
+  tagId  String @map("tag")  @db.ObjectId
+
+  post Post @relation(fields: [postId], references: [id])
+  tag  Tag  @relation(fields: [tagId], references: [id])
+
+  @@unique([postId, tagId])
 }

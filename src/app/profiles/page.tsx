@@ -79,6 +79,13 @@ export default function MyProfile() {
         type="submit"
         />
         <Button
+        outline
+        label="Criar tag"
+        icon={AiOutlineLogin}
+        onClick={() => router.push('/tags')}
+        type="submit"
+        />
+        <Button
             outline
             label="Logout"
             icon={AiOutlineLogout}

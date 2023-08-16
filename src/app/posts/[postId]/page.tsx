@@ -10,10 +10,14 @@ interface Post {
   title: string;
   createdAt: string;
   slug: string;
-  body: string; 
+  body: string;
+  tags: Tag[]; // Add tags here
 }
 
-
+interface Tag {
+  id: string;
+  name: string;
+}
 
 const PostIdPage: React.FC = () => {
   const [post, setPost] = useState<Post | null>(null);
@@ -56,6 +60,18 @@ const PostIdPage: React.FC = () => {
             <h3 className="mt-6 text-lg md:text-xl text-gray-600">{post.slug}</h3>
             <div className="mt-6 prose max-w-none">
               <p className="text-justify">{post.body}</p>
+            </div>
+            <div className="mt-4">
+              {post.tags && post.tags.length > 0 && (
+                <div>
+                  <span className="font-bold text-gray-600">Tags:</span>
+                  {post.tags && post.tags.map(tag => (
+                  <span key={`tag-${tag.id}`} className="ml-2 bg-gray-200 rounded px-2 py-1 text-sm">
+                    {tag.name}
+                  </span>
+                ))}
+                </div>
+              )}
             </div>
             <p className="mt-6 mt-2 text-sm text-gray-500">
               <DateFormatter dateString={post.createdAt} /> - Rafael Murata
