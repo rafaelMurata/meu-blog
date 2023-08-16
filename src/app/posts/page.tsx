@@ -4,20 +4,17 @@ import toast from 'react-hot-toast';
 import { useRouter } from "next/navigation";
 import { SafeUser } from '../types';
 import { getSession } from 'next-auth/react';
+import { Session } from 'next-auth';
 
-interface CreatePostProps {
-  currentUser?: SafeUser | null;
-}
-
-const CreatePostPage: React.FC<CreatePostProps> = ({ currentUser}) => {
-  const [session, setSession] = useState(null);
+const CreatePostPage: React.FC = () => {
+  const [session, setSession] = useState<Session | null>(null);
   const router = useRouter();
 
   useEffect(() => {
     const fetchSession = async () => {
-      const currentSession = await getSession();
-      setSession(currentSession);
-      if (!currentSession) {
+      const session = await getSession();
+      setSession(session);
+      if (!session) {
         router.push('/api/auth/signin');
       }
     };

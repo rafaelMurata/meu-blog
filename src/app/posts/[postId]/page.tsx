@@ -13,11 +13,9 @@ interface Post {
   body: string; 
 }
 
-interface PostIdPageProps {
-    postId: String;
-}
 
-const PostIdPage: React.FC<PostIdPageProps> = () => {
+
+const PostIdPage: React.FC = () => {
   const [post, setPost] = useState<Post | null>(null);
 
     const pathname = usePathname();
