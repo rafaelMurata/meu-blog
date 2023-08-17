@@ -17,7 +17,6 @@ export default async function handler(request: NextApiRequest, response: NextApi
         return response.status(400).json({ error: "User not found" });
       }
 
-      // Create the post first
       const post = await prisma.post.create({
         data: {
           title,
@@ -32,7 +31,6 @@ export default async function handler(request: NextApiRequest, response: NextApi
         }
       });
 
-      // Create or connect tags to the post
       for (let tagName of tags) {
         const tag = await prisma.tag.upsert({
           where: { name: tagName },

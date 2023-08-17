@@ -1,4 +1,3 @@
-// savePost.ts
 import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from '@/app/libs/prismadb';
 import getCurrentUser from './getCurrentUser';

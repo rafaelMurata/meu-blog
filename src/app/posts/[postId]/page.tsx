@@ -31,7 +31,6 @@ const PostIdPage: React.FC = () => {
       postId = parts[2];
     } else {
       console.error("Pathname is null!");
-      // Handle this error as needed
     }
 
     useEffect(() => {
@@ -43,7 +42,6 @@ const PostIdPage: React.FC = () => {
           setPost(response.data);
         } catch (error) {
           console.error("There was an error fetching the post:", error);
-          // You might want to handle this error more gracefully in a real-world scenario
         }
       };
 

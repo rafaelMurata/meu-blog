@@ -2,7 +2,6 @@ import prisma from "@/app/libs/prismadb";
 
 export default async function getPostById(postId: string) {
   try {
-   // console.log('Fetching post with id: ', postId);
     const post = await prisma.post.findFirst({
       where: {
         id: postId,

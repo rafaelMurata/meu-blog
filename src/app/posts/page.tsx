@@ -64,18 +64,16 @@ const CreatePostPage: React.FC = ({
     event.preventDefault();
 
     try {
-      //console.log("Session:", session?.user?.email?.toString());
-      //console.log(currentUser  + 'user');
+   
       const postData = {
         title,
         body,
         slug,
         imageUrl,
         userEmail: session?.user?.email?.toString(),
-        tags: selectedTags
+        tags: selectedTags,
       };      
 
-      // Send a POST request to your API route
       const response = await fetch('/api/posts/create', {
         method: 'POST',
         headers: {
@@ -86,7 +84,7 @@ const CreatePostPage: React.FC = ({
 
       if (response.ok) {
         toast.success('Post saved successfully');
-        router.refresh(); // Or navigate to a different page
+        router.refresh();
       } else {
         throw new Error('Failed to save post');
       }

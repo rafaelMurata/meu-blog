@@ -14,7 +14,6 @@ interface SignInResponse {
     error?: string | null;
     user?: SafeUser;
 }
-
   
 export default function MyProfile() {
 
@@ -28,7 +27,6 @@ export default function MyProfile() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
   
-    // Valida os dados do formulário
     if (email === "" || password === "") {
       alert("Por favor, preencha todos os campos.");
       return;
@@ -38,32 +36,20 @@ export default function MyProfile() {
         password: password, 
         redirect: false, 
       }).then((callback: SignInResponse | undefined) => {
-        if (callback) {
-          if(callback.ok){
+          if(callback?.ok){
               setCallback(callback.ok);
               toast.success('Logged in');
               router.refresh();
           }
-          if (callback.error) {
+          if (callback?.error) {
             toast.error(callback.error);
           }
-        } else {
-          // Lidar com o caso em que callback é undefined se necessário
-        }
       });
     }
 
   const handleLogout = () => {
     signOut(); 
     router.refresh();
-    // Logout the user
-   //Auth.signOut();
-    // Clear the user from sessionStorage
-   // sessionStorage.removeItem("user");
-    // Set the user to null
-   // setUser(null);
-    // Update the navbar
-   // router.push('/profiles');
   };
  
   if (callback) {

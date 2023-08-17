@@ -9,7 +9,7 @@ const CreateTagPage: React.FC = () => {
     const [tags, setTags] = useState<string[]>([]);
     const fetchTags = async () => {
         try {
-          const response = await fetch('/api/tags'); // Suponho que você tenha uma rota para buscar todas as tags
+          const response = await fetch('/api/tags');
           const data = await response.json();
           setTags(data.tags);
         } catch (error) {
@@ -40,7 +40,7 @@ const CreateTagPage: React.FC = () => {
         if (response.ok) {
           toast.success('Tag saved successfully');
           setTags([...tags, tagName]);
-          setTagName(''); // Limpar o input após adicionar
+          setTagName('');
         } else {
           throw new Error('Failed to save tag');
         }
@@ -72,7 +72,6 @@ const CreateTagPage: React.FC = () => {
             </button>
           </form>
   
-          {/* Lista de tags */}
           <div className="mt-6">
             <h2 className="text-xl font-bold mb-3">Tags Criadas:</h2>
             <ul>
