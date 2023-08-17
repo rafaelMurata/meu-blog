@@ -24,7 +24,7 @@ export default async function RootLayout({
     <html lang="pt">
     <body className='{font.className}'>
       <ClientOnly>
-      <ToasterProvider />
+        <ToasterProvider />
         <Navbar currentUser={currentUser}/>
       </ClientOnly>
       <div className="">

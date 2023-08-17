@@ -1,4 +1,5 @@
 'use client';
+import ReactMarkdown from 'react-markdown';
 import Image from "next/image";
 import { TbPhotoPlus } from 'react-icons/tb';
 import { CldUploadWidget } from "next-cloudinary";
@@ -11,7 +12,7 @@ import { Session } from 'next-auth';
 declare global {
   var cloudinary: any
 }
-const uploadPreset = "rmjdpgma";
+const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
 
 const CreatePostPage: React.FC = ({
  
@@ -130,11 +131,17 @@ const CreatePostPage: React.FC = ({
           <div className="mb-4">
             <label htmlFor="body" className="block text-gray-700 font-bold">Corpo do Post</label>
             <textarea
-              id="body"
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-              className="border rounded-md px-4 py-2 w-full h-40"
+                id="body"
+                value={body}
+                onChange={(e) => setBody(e.target.value)}
+                className="border rounded-md px-4 py-2 w-full h-40"
             />
+        </div>
+          <div className="mb-4">
+              <label className="block text-gray-700 font-bold">Preview do Post em Markdown</label>
+              <div className="border rounded-md p-4 bg-gray-50 prose prose-sm max-w-none">
+                  <ReactMarkdown children={body} />
+              </div>
           </div>
           <div className="mb-4">
           <label htmlFor="tags" className="block text-gray-700 font-bold">Tags</label>

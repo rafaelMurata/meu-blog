@@ -5,7 +5,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import DateFormatter from "./DateFormatter";
 
-// Interface representando o tipo de cada post
 interface Post {
   title: string;
   imageUrl: string;

@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import Container from '@/app/components/Container';
 import axios from 'axios';  // Ensure you've imported axios
 import DateFormatter from '@/app/components/blog/DateFormatter';
+import ReactMarkdown from 'react-markdown';
 
 interface Post {
   id: string;
@@ -48,45 +49,43 @@ const PostIdPage: React.FC = () => {
       fetchPost();
     }, [postId]);
 
-  return (
-    <Container>
-      {post ? (
-        <div className="flex justify-center items-center h-screen">
-          <div className="max-w-3xl mx-auto p-6">
-            <h1 className="mt-6 text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-gray-800">
-              {post.title}
-            </h1>
-            {post.imageUrl && (
-              <div className="mb-4">
-                <img src={post.imageUrl} alt={post.title} className="max-w-full h-auto rounded-md shadow-lg" />
-              </div>
-            )}
-            <h3 className="mt-6 text-lg md:text-xl text-gray-600">{post.slug}</h3>
-            <div className="mt-6 prose max-w-none">
-              <p className="text-justify">{post.body}</p>
-            </div>
-            <div className="mt-4">
-              {post.tags && post.tags.length > 0 && (
-                <div>
-                  <span className="font-bold text-gray-600">Tags:</span>
-                  {post.tags && post.tags.map(tag => (
-                  <span key={`tag-${tag.id}`} className="ml-2 bg-gray-200 rounded px-2 py-1 text-sm">
-                    {tag.name}
-                  </span>
-                ))}
+    return (
+      <Container>
+        {post ? (
+          <div className="flex justify-center items-start pt-20 pb-10">
+            <div className="max-w-3xl mx-auto p-6">
+              <h1 className="mb-4 text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800">
+                {post.title}
+              </h1>
+              {post.imageUrl && (
+                <div className="mb-4 flex justify-center">
+                  <img src={post.imageUrl} alt={post.title} className="max-w-full h-auto rounded-md shadow-lg" />
                 </div>
               )}
+              <h3 className="mb-4 text-lg md:text-xl text-gray-600">{post.slug}</h3>
+              <div className="border rounded-md p-4 mb-4 bg-gray-50 prose prose-sm max-w-4xl text-lg mx-auto"> {/* Alterado max-w-none para max-w-4xl e adicionado mx-auto para centralizar */}
+                  <ReactMarkdown children={post.body} />
+              </div>
+              {post.tags && post.tags.length > 0 && (
+                <div className="mb-4">
+                  <span className="font-bold text-gray-600">Tags:</span>
+                  {post.tags && post.tags.map(tag => (
+                    <span key={`tag-${tag.id}`} className="ml-2 bg-gray-200 rounded px-2 py-1 text-sm">
+                      {tag.name}
+                    </span>
+                  ))}
+                </div>
+              )}
+              <p className="text-sm text-gray-500">
+                <DateFormatter dateString={post.createdAt} /> - Rafael Murata
+              </p>
             </div>
-            <p className="mt-6 mt-2 text-sm text-gray-500">
-              <DateFormatter dateString={post.createdAt} /> - Rafael Murata
-            </p>
           </div>
-        </div>
-      ) : (
-        <p>Loading...</p>
-      )}
-    </Container>
-  );
+        ) : (
+          <p>Loading...</p>
+        )}
+      </Container>
+    );      
 };
 
 export default PostIdPage;
