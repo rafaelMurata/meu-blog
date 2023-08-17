@@ -11,7 +11,8 @@ interface Post {
   createdAt: string;
   slug: string;
   body: string;
-  tags: Tag[]; // Add tags here
+  imageUrl?: string;
+  tags: Tag[];
 }
 
 interface Tag {
@@ -57,6 +58,11 @@ const PostIdPage: React.FC = () => {
             <h1 className="mt-6 text-3xl md:text-4xl lg:text-5xl font-bold mb-2 text-gray-800">
               {post.title}
             </h1>
+            {post.imageUrl && (
+              <div className="mb-4">
+                <img src={post.imageUrl} alt={post.title} className="max-w-full h-auto rounded-md shadow-lg" />
+              </div>
+            )}
             <h3 className="mt-6 text-lg md:text-xl text-gray-600">{post.slug}</h3>
             <div className="mt-6 prose max-w-none">
               <p className="text-justify">{post.body}</p>

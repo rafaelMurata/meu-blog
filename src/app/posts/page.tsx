@@ -1,12 +1,26 @@
 'use client';
-import { useEffect, useState } from 'react';
+import Image from "next/image";
+import { TbPhotoPlus } from 'react-icons/tb';
+import { CldUploadWidget } from "next-cloudinary";
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useRouter } from "next/navigation";
 import { SafeUser } from '../types';
 import { getSession } from 'next-auth/react';
 import { Session } from 'next-auth';
+declare global {
+  var cloudinary: any
+}
+const uploadPreset = "rmjdpgma";
 
-const CreatePostPage: React.FC = () => {
+const CreatePostPage: React.FC = ({
+ 
+}) => {
+
+  const handleUpload = useCallback((result: any) => {
+    setImageUrl(result.info.secure_url);
+  }, []);
+
   const [session, setSession] = useState<Session | null>(null);
   const router = useRouter();
 
@@ -50,7 +64,6 @@ const CreatePostPage: React.FC = () => {
     event.preventDefault();
 
     try {
-      const session = await getSession();
       //console.log("Session:", session?.user?.email?.toString());
       //console.log(currentUser  + 'user');
       const postData = {
@@ -141,6 +154,29 @@ const CreatePostPage: React.FC = () => {
             ))}
           </select>
         </div>
+        <div className="mb-4">
+        <label className="block text-gray-700 font-bold">Upload da Imagem</label>
+        <CldUploadWidget 
+            onUpload={handleUpload} 
+            uploadPreset={uploadPreset}
+            options={{ maxFiles: 1 }}
+          >
+            {({ open }) => (
+              <div
+                onClick={() => open?.()}
+                className="relative cursor-pointer hover:opacity-70 transition border-dashed border-2 p-20 border-neutral-300 flex flex-col justify-center items-center gap-4 text-neutral-600"
+              >
+                <TbPhotoPlus size={50} />
+                <div className="font-semibold text-lg">Click to upload</div>
+                {imageUrl && (
+                    <div className="absolute inset-0 w-full h-full">
+                        <Image src={imageUrl} alt="Uploaded image" layout="fill" objectFit="cover" />
+                    </div>
+                )}
+              </div>
+            )}
+          </CldUploadWidget>
+      </div>
           <button
             type="submit"
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
