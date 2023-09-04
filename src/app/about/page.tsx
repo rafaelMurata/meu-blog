@@ -27,11 +27,9 @@ export default function About() {
             With a decade-long journey in software engineering, I have become an expert in seamless integrations. My skills are deeply rooted in Java with an expansive knowledge of both AWS and GCP infrastructure. From working on core transaction software to leading R&D teams, my experiences have always revolved around ensuring quality, scalability, and security in software solutions.
             <br></br>
             <br></br>
-            Having traveled the world, from Italy to the Netherlands, for various projects, I have had the honor of contributing to diverse sectors, including telecom and banking. My passion extends beyond just code; I've been an active participant in international conferences and have a penchant for sharing knowledge, evident from the training I've created and the textbooks I've penned.
+            Having traveled the world from Italy to the Netherlands for various projects, I have been honored to contribute to many sectors including telecommunications and banking. My passion goes beyond code; I have been actively participating in international conferences and have a penchant for sharing knowledge, evident in the training I have created and the book I am writing.            <br></br>
             <br></br>
-            <br></br>
-            Fluent in English and with basic proficiency in both Spanish and French, I am always on the lookout for new challenges. In an ever-evolving tech landscape, my adaptability and dedication have been my steadfast allies.
-            <br></br>
+            Advanced in English and with basic proficiency in Spanish and French, I am always looking for new challenges. In an ever-evolving technological landscape, my adaptability and dedication have been my firm allies.            <br></br>
             <br></br>
             Connect with me via <strong><a href="mailto:rafael.murata@gmail.com" target="_blank" rel="noopener noreferrer">Email</a></strong>, 
             <strong><a href="https://github.com/rafaelMurata" target="_blank" rel="noopener noreferrer"> GitHub</a></strong>, 
