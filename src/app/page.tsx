@@ -3,6 +3,7 @@ import Container from "./components/Container";
 import PostHero from "./components/blog/PostHero";
 import PostPreview from "./components/blog/PostPreview";
 import getPosts from "./api/actions/getPosts";
+import IntroSection from "./components/IntroSection";
 
 const Home = async () => {
   try {
@@ -11,18 +12,9 @@ const Home = async () => {
     return (
       <Container>
         <div className="flex justify-center min-h-screen">
-          <div className="pt-32"> 
-            <div className="mb-10">
-              <h1 className="text-4xl font-bold leading-tight text-center text-gray-800">
-                Bem vindo ao meu blog
-              </h1>
-              <p className="text-lg text-center text-gray-600">
-                Meu blog foi criado em Next.js e Tailwind CSS.
-              </p>
-            </div>
-
+          <div className="pt-20"> 
+            <IntroSection />
             <PostHero />
-
             <div className="mt-12">
               <h2 className="text-2xl font-bold mb-6">Posts recentes</h2>
               {recentPosts && recentPosts.length > 0 ? (

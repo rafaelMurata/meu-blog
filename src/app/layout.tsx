@@ -1,8 +1,8 @@
 import getCurrentUser from './api/actions/getCurrentUser'
 import ClientOnly from './components/ClientOnly'
+import GA from './components/GA'
 import Navbar from './components/navbar/Navbar'
 import ToasterProvider from './components/providers/ToasterProvider'
-import PostIdPage from './posts/[postId]/page'
 import './styles/globals.css'
 import { Inter } from 'next/font/google'
 
@@ -19,9 +19,9 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
   const currentUser = await getCurrentUser();
- // console.log(currentUser + 'user');
   return (
     <html lang="pt">
+    <GA GA_MEASUREMENT_ID='G-ZSQGBBBC8Y' />
     <body className='{font.className}'>
       <ClientOnly>
         <ToasterProvider />
