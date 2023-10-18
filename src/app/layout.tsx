@@ -21,7 +21,7 @@ export default async function RootLayout({
   const currentUser = await getCurrentUser();
   return (
     <html lang="pt">
-    <GA GA_MEASUREMENT_ID='G-ZSQGBBBC8Y' />
+    <GA GA_MEASUREMENT_ID='G-LRW56LCEFX' />
     <body className='{font.className}'>
       <ClientOnly>
         <ToasterProvider />
