@@ -1,58 +1,58 @@
-## Entendendo a Palavra-chave abstract no Java
-Quando se trata de programação orientada a objetos a palavra abstract é um dos pilares fundamentais. No Java a palavra abstract é um dos principais mecanismos para alcancar esta abstração.
+## Understanding the abstract Keyword in Java
+When it comes to object-oriented programming, the word abstract is one of the fundamental pillars. In Java, the word abstract is one of the main mechanisms for achieving this abstraction.
 
-## O que é abstração de dados?
-Na ciencia da computacao a abstracao representa um dos principios fundamentais, refere-se ao processo de esconder detalhes complexos e desnecessarios do sistema, objetivando-se a preocupações de alto nivel sobre as funcionalidades.
+## What is data abstraction?
+In computer science, abstraction represents one of the fundamental principles, it refers to the process of hiding complex and unnecessary details of the system, aiming at high-level concerns about functionalities.
 
-## O Que Significa abstract em Java?
-Em termos simples, abstract é uma palavra-chave que indica que algo é incompleto ou não pode ser instanciado diretamente. No contexto do Java, você pode encontrar classes e métodos abstratos.
+## What does abstract mean in Java?
+In simple terms, abstract is a keyword that indicates that something is incomplete or cannot be instantiated directly. In the context of Java, you can find abstract classes and methods.
 
-## Classes Abstratas
-Uma classe marcada como abstract não pode ser instanciada diretamente, mas eles podem ser subclassificados. Quando uma classe abstrata é subclassificada, a subclasse geralmente fornece implementações para todos os métodos abstratos em sua classe pai. No entanto, se isso não acontecer, a subclasse também deverá ser declarada abstrata.
+## Abstract Classes
+A class marked as abstract cannot be instantiated directly, but they can be subclassed. When an abstract class is subclassed, the subclass usually provides implementations for all abstract methods in its parent class. However, if this does not happen, the subclass must also be declared abstract.
 
-Em outras palavras, você não pode criar um objeto dessa classe usando o operador new. Uma classe abstrata é geralmente usada como uma classe base para outras classes.
+In other words, you cannot create an object of this class using the new operator. An abstract class is generally used as a base class for other classes.
 
 ```java
 abstract class Animal {
-    abstract void sound();
+     abstract void sound();
 }
 ```
-Neste exemplo, Animal é uma classe abstrata que tem um método abstrato chamado sound.
+In this example, Animal is an abstract class that has an abstract method called sound.
 
-## Métodos Abstratos
+## Abstract Methods
 
-Um método abstrato é um método que não tem corpo. Ele só tem uma declaração. Se uma classe tem mesmo que seja apenas um método abstrato, a classe inteira deve ser declarada como abstrata.
+An abstract method is a method that has no body. He only has one statement. If a class has even just one abstract method, the entire class must be declared abstract.
 ```java
 abstract class Animal {
-    abstract void sound();
+     abstract void sound();
 }
 ```
-Aqui, sound é um método abstrato. Classes que estendem Animal precisam fornecer uma implementação para este método.
+Here, sound is an abstract method. Classes that extend Animal need to provide an implementation for this method.
 
-## Por Que Usar abstract?
-A ideia por trás de classes e métodos abstratos é fornecer uma estrutura. Classes abstratas permitem definir métodos que devem ser implementados pelas subclasses, garantindo assim um contrato específico que as subclasses devem seguir.
+## Why Use abstract?
+The idea behind abstract classes and methods is to provide a structure. Abstract classes allow you to define methods that must be implemented by subclasses, thus guaranteeing a specific contract that subclasses must follow.
 
-Por exemplo:
+For example:
 ```java
 class Dog extends Animal {
-    void sound() {
-        System.out.println("O cão late");
-    }
+     void sound() {
+         System.out.println("The dog barks");
+     }
 }
 
 class Cat extends Animal {
-    void sound() {
-        System.out.println("O gato mia");
-    }
+     void sound() {
+         System.out.println("The cat meows");
+     }
 }
 ```
-Aqui, tanto Dog quanto Cat são subclasses de Animal e ambas fornecem sua própria implementação do método sound.
+Here, both Dog and Cat are subclasses of Animal and both provide their own implementation of the sound method.
 
-## Considerações Importantes
-* Uma classe abstrata pode ter variáveis, métodos construtores e métodos concretos (métodos com corpo).
-* Se uma subclasse não fornecer implementações para todos os métodos abstratos da classe pai abstrata, então a subclasse também deve ser marcada como abstrata.
-* Métodos abstratos não podem ser privados ou finais.
-* Uma classe não pode ser tanto abstract quanto final.
+## Important Considerations
+* An abstract class can have variables, constructor methods and concrete methods (methods with body).
+* If a subclass does not provide implementations for all of the abstract methods of the abstract parent class, then the subclass must also be marked as abstract.
+* Abstract methods cannot be private or final.
+* A class cannot be both abstract and final.
 
-## Conclusão
-A palavra-chave abstract fornece um mecanismo poderoso para abstração em Java. Ela ajuda a garantir um contrato entre classes base e subclasses, permitindo uma estrutura clara e facilitando a manutenção e expansão do código. Ao entender e usar corretamente classes e métodos abstratos, os desenvolvedores podem criar sistemas mais modulares e escaláveis.
+## Conclusion
+The abstract keyword provides a powerful mechanism for abstraction in Java. It helps ensure a contract between base classes and subclasses, allowing for a clear structure and facilitating code maintenance and expansion. By understanding and correctly using abstract classes and methods, developers can create more modular and scalable systems.
