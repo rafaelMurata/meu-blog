@@ -16,7 +16,6 @@ export default function PostPreview({ post }: { post: Post }) {
           <p className="font-semibold text-xl group-hover:underline">
             {post.title}
           </p>
-          <DateFormatter dateString={post.createdAt.toString() || ''} />
           <p>{post.slug}</p>
         </div>
       </Link>

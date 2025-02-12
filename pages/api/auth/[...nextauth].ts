@@ -1,68 +1,63 @@
-import bcrypt from "bcrypt"
-import NextAuth, { AuthOptions } from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
-import { PrismaAdapter } from "@next-auth/prisma-adapter"
-
-import prisma from "@/app/libs/prismadb"
-import { getServerSession } from "next-auth/next";
-import { SafeUser } from "@/app/types"
-
-export async function getSession() {
-  return await getServerSession();
-}
+import bcrypt from "bcrypt";
+import NextAuth, { AuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { SafeUser } from "@/app/types";
+import { findUserByEmail } from "@/app/api/actions/jsonHandler";
 
 export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
-      name: 'credentials',
+      name: "credentials",
       credentials: {
-        email: { label: 'email', type: 'text' },
-        password: { label: 'password', type: 'password' }
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error('Invalid credentials');
+        // Verificar se as credenciais foram fornecidas
+        if (!credentials || !credentials?.password) {
+          throw new Error("Invalid credentials");
         }
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email
-          }
-        });
+        // Buscar usuário pelo email
+        const user = findUserByEmail(credentials.email);
 
-        if (!user || !user?.hashedPassword) {
-          throw new Error('Invalid credentials');
+        if (!user || !user.hashedPassword) {
+          throw new Error("Invalid credentials");
         }
 
+        // Comparar a senha fornecida com a senha armazenada
         const isCorrectPassword = await bcrypt.compare(
-          credentials.password,
-          user.hashedPassword
+            credentials.password,
+            user.hashedPassword
         );
-        
+
         if (!isCorrectPassword) {
-          throw new Error('Invalid credentials');
+          throw new Error("Invalid credentials");
         }
 
+        // Retornar o usuário seguro (sem expor informações sensíveis)
         const safeUser: SafeUser = {
-          ...user,
-          createdAt: user.createdAt.toISOString(),
-          updatedAt: user.updatedAt.toISOString(),
-          emailVerified: user.emailVerified?.toISOString() || null,
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          hashedPassword: user.hashedPassword,
+          createdAt: user.createdAt,
+          updatedAt: user.updatedAt,
+          emailVerified: user.emailVerified,
         };
-      
+
         return safeUser;
-      }
-    })
+      },
+    }),
   ],
   pages: {
-    signIn: '/',
+    signIn: "/", // Página de login personalizada (opcional)
   },
-  debug: process.env.NODE_ENV === 'development',
+  debug: process.env.NODE_ENV === "development",
   session: {
     strategy: "jwt",
   },
   secret: process.env.NEXTAUTH_SECRET,
-}
+};
 
 export default NextAuth(authOptions);

@@ -1,19 +1,19 @@
-import { User } from "@prisma/client";
-
-export type SafeUser = Omit<
-  User,
-  "createdAt" | "updatedAt" | "emailVerified"
-> & {
+export type SafeUser = {
+  id: string;
+  name: string;
+  email: string;
+  hashedPassword: string;
   createdAt: string;
   updatedAt: string;
   emailVerified: string | null;
 };
 
-export type SafePost = Omit<
-  User,
-  "createdAt" | "updatedAt" | "emailVerified"
-> & {
+export type Post = {
+  id: string;
+  title: string;
+  body: string;
+  slug: string;
+  imageUrl?: string; // Opcional
   createdAt: string;
-  updatedAt: string;
-  emailVerified: string | null;
+  tags: string[];
 };

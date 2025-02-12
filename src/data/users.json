@@ -1,0 +1,11 @@
+[
+  {
+    "id": "1",
+    "name": "Admin User",
+    "email": "admin@example.com",
+    "hashedPassword": "rafael.murata@gmail.com",
+    "createdAt": "2023-07-28T14:16:30.123+00:00",
+    "updatedAt": "2023-01-01T00:00:00.000Z",
+    "emailVerified": null
+  }
+]
