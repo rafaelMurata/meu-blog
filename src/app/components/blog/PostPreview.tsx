@@ -5,7 +5,7 @@ interface Post {
   id: string;
   title: string;
   createdAt: string;
-  slug: string;
+  summary: string;
 }
 
 export default function PostPreview({ post }: { post: Post }) {
@@ -16,7 +16,7 @@ export default function PostPreview({ post }: { post: Post }) {
           <p className="font-semibold text-xl group-hover:underline">
             {post.title}
           </p>
-          <p>{post.slug}</p>
+          <p>{post.summary}</p>
         </div>
       </Link>
     </div>

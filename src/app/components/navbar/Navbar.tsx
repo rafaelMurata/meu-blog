@@ -1,66 +1,43 @@
-'use client';
-import Logo from "./Logo";
-import MenuItem from "./MenuItem";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { signOut } from 'next-auth/react';
-import Container from "../Container";
-import { SafeUser } from "@/app/types";
+'use client'
+import { useSession, signOut } from 'next-auth/react'
+import Link from 'next/link'
+import MenuItem from './MenuItem'
+import Logo from "@/app/components/navbar/Logo"
 
-interface NavbarProps {
-  currentUser?: SafeUser | null;
+const Navbar = () => {
+    const { data: session, status } = useSession()
+
+    return (
+        <nav className="flex justify-between items-center p-4 bg-white shadow-md" role="navigation">
+            <div className="flex items-center">
+                <Link href="/" aria-label="Home">
+                    <Logo />
+                </Link>
+                <h1 className="ml-2 font-bold text-xl">
+                    <Link href="/" className="text-gray-800 hover:text-gray-600">
+                        Rafael Murata
+                    </Link>
+                </h1>
+            </div>
+
+            <div className="flex gap-4">
+                {status === 'unauthenticated' && (
+                    <>
+                        <MenuItem label="Livro" href="/books" />
+                        <MenuItem label="Sobre" href="/about" />
+                        <MenuItem label="Login" href="/login" />
+                    </>
+                )}
+
+                {status === 'authenticated' && (
+                    <>
+                        <MenuItem label="Novo Post" href="/posts/new" />
+                        <MenuItem label="Logout" onClick={() => signOut()} />
+                    </>
+                )}
+            </div>
+        </nav>
+    )
 }
 
-const Navbar: React.FC<NavbarProps> = ({
-  currentUser,
-}) => {
-  const router = useRouter()
-  const fetchData = async () => {
-    try {
-      // Fetch data if needed
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-
-  return (
-    <div className="fixed w-full bg-white z-10 shadow-sm">
-      <Container>
-        <div className="flex flex-row items-center justify-between py-4 border-b-[1px] gap-3 md:gap-0">
-          <div className="flex items-center">
-            <Logo />
-            <label className="ml-2 font-bold text-xl">Rafael Murata</label>
-          </div>
-          <div className="hidden md:flex gap-6">
-            <MenuItem label="Livro" onClick={() => router.push('/books')} />
-            <MenuItem label="Sobre" onClick={() => router.push('/about')} />
-            {!currentUser && (
-              <MenuItem label="Login" onClick={() => router.push('/profiles')} />
-            )}
-            {currentUser && (
-              <>
-                <MenuItem label="Create Post" onClick={() => router.push('/posts')} />
-                <MenuItem label="Create tags" onClick={() => router.push('/tags')} />
-                <MenuItem label="Logout" onClick={ ()=> signOut() } />
-              </>
-            )}
-          </div>
-          <div className="md:hidden flex gap-3">
-            <button className="text-gray-500 hover:text-gray-800 focus:outline-none">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      </Container>
-    </div>
-  );
-};
-
-export default Navbar;
+export default Navbar

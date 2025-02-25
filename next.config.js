@@ -1,10 +1,13 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-    images: {
-        domains: [
-          'res.cloudinary.com'
-        ]
-      }
-}
-
-module.exports = nextConfig
+// next.config.js
+module.exports = {
+    webpack: (config, { isServer }) => {
+        if (!isServer) {
+            config.resolve.fallback = {
+                fs: false,
+                path: false
+            }
+        }
+        return config;
+    }
+};

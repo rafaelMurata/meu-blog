@@ -3,13 +3,13 @@ import Container from "./components/Container";
 import PostHero from "./components/blog/PostHero";
 import PostPreview from "./components/blog/PostPreview";
 import IntroSection from "./components/IntroSection";
-import { getPosts } from "@/app/api/actions/jsonHandler";
+import {getPosts} from "@/app/api/actions/jsonHandler.server";
 
 interface Post {
   id: string;
   title: string;
   body: string;
-  slug: string;
+  summary: string;
   imageUrl?: string;
   createdAt: string;
   tags: string[];
@@ -31,7 +31,6 @@ const Home = async () => {
                 {recentPosts && recentPosts.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {recentPosts.map((post: Post) => {
-                        console.log(post);
                         return (
                             <div key={post.id}>
                               <PostPreview post={post} />

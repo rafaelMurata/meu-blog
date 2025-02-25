@@ -9,7 +9,7 @@ interface Post {
   title: string;
   imageUrl: string;
   createdAt: string;
-  slug: string;
+  summary: string;
 }
 
 export default function PostHero() {
@@ -23,7 +23,7 @@ export default function PostHero() {
   return (
     <div className="grid gap-8 md:grid-cols-2 grid-cols-1">
       {posts.map((post: Post) => (
-        <Link key={post.slug} href={`/posts/${post.slug}`}>
+        <Link key={post.summary} href={`/posts/${post.summary}`}>
           <div className="w-full mx-auto group">
             <Image
               alt={`cover image for ${post.title}`}
@@ -40,7 +40,7 @@ export default function PostHero() {
                 </p>
                 <DateFormatter dateString={post.createdAt} />
               </div>
-              <p>{post.slug}</p>
+              <p>{post.summary}</p>
             </div>
           </div>
         </Link>

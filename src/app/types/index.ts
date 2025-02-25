@@ -12,8 +12,9 @@ export type Post = {
   id: string;
   title: string;
   body: string;
-  slug: string;
-  imageUrl?: string; // Opcional
+  summary: string;
+  imageUrl?: string;
+  authorId: string,
   createdAt: string;
   tags: string[];
 };
