@@ -17,7 +17,6 @@ interface Post {
 
 const Home = async () => {
   try {
-    // Especificamos o tipo de retorno da função getPosts
     const recentPosts: Post[] = await getPosts();
 
     return (

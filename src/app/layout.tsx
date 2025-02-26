@@ -1,18 +1,13 @@
-// app/layout.tsx
-import ClientOnly from './components/ClientOnly'
-import GA from './components/GA'
-import Navbar from './components/navbar/Navbar'
-import ToasterProvider from './components/providers/ToasterProvider'
-import './styles/globals.css'
+import { DefaultSeo } from 'next-seo'
 import { Inter } from 'next/font/google'
-import AuthProvider from './providers'
+import ClientOnly from '@/app/components/ClientOnly'
+import GA from '@/app/components/GA'
+import Navbar from '@/app/components/navbar/Navbar'
+import ToasterProvider from '@/app/components/providers/ToasterProvider'
+import AuthProvider from '@/app/providers'
+import './styles/globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
-
-export const metadata = {
-    title: 'Meu Blog',
-    description: "Bem vindo ao meu blog"
-}
 
 export default function RootLayout({
                                        children,
@@ -20,17 +15,24 @@ export default function RootLayout({
     children: React.ReactNode
 }) {
     return (
-        <html lang="pt">
-        <GA GA_MEASUREMENT_ID='G-LRW56LCEFX' />
+        <html lang="pt-BR">
+        <head>
+            <title>Blog do Rafael Murata</title>
+            <meta name="description" content="Explorando ideias e compartilhando conhecimento."/>
+            <meta name="google-adsense-account" content="ca-pub-8099369477459294"/>
+            <GA GA_MEASUREMENT_ID='G-LRW56LCEFX'/>
+        </head>
+
         <body className={inter.className}>
         <AuthProvider>
-            <ClientOnly>
+        <ClientOnly>
                 <ToasterProvider />
                 <Navbar />
             </ClientOnly>
-            <div className="">
+
+            <main className="min-h-screen">
                 {children}
-            </div>
+            </main>
         </AuthProvider>
         </body>
         </html>

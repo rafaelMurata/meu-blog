@@ -3,9 +3,11 @@ import { useSession, signOut } from 'next-auth/react'
 import Link from 'next/link'
 import MenuItem from './MenuItem'
 import Logo from "@/app/components/navbar/Logo"
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
     const { data: session, status } = useSession()
+    const router = useRouter()
 
     return (
         <nav className="flex justify-between items-center p-4 bg-white shadow-md" role="navigation">
@@ -23,15 +25,15 @@ const Navbar = () => {
             <div className="flex gap-4">
                 {status === 'unauthenticated' && (
                     <>
-                        <MenuItem label="Livro" href="/books" />
-                        <MenuItem label="Sobre" href="/about" />
-                        <MenuItem label="Login" href="/login" />
+                        <MenuItem label="Livro" onClick={() => router.push('/books')} />
+                        <MenuItem label="Sobre" onClick={() => router.push('/about')} />
+                        <MenuItem label="Login" onClick={() => router.push('/login')} />
                     </>
                 )}
 
                 {status === 'authenticated' && (
                     <>
-                        <MenuItem label="Novo Post" href="/posts/new" />
+                        <MenuItem label="Novo Post" onClick={() => router.push('/posts/new')}/>
                         <MenuItem label="Logout" onClick={() => signOut()} />
                     </>
                 )}

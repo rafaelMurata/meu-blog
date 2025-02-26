@@ -1,10 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import { Post } from '@/app/types';
+import {generateSlug} from "@/app/lib/slugGenerator";
 
 const DATA_DIR = path.join(process.cwd(), 'src/data');
 const POSTS_FILE_PATH = path.join(DATA_DIR, 'posts.json');
-const USERS_FILE_PATH = path.join(DATA_DIR, 'users.json');
 const TAGS_FILE_PATH = path.join(DATA_DIR, 'tags.json');
 
 // Garante que o diretório e arquivos existam
@@ -48,18 +48,18 @@ export const findPostById = (id: string): Post | undefined => {
     return posts.find((post: Post) => post.id === id);
 };
 
+export const findPostBySummary = (summary: string): Post | undefined => {
+    const posts = getPosts();
+
+    return posts.find((post: Post) =>
+        generateSlug( post.summary ) === summary
+    );
+};
+
 export const addPost = (newPost: Post) => {
     const posts = getPosts();
     posts.push(newPost);
     writeFile(POSTS_FILE_PATH, posts);
-};
-
-// Users
-export const getUsers = () => readFile(USERS_FILE_PATH);
-
-export const findUserByEmail = (email: string) => {
-    const users = getUsers();
-    return users.find((user: any) => user.email === email);
 };
 
 // Tags

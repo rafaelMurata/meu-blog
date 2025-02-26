@@ -1,6 +1,7 @@
 // app/api/posts/route.ts
 import { NextResponse } from 'next/server'
-import { addPost, getUsers, findPostById } from "@/app/api/actions/jsonHandler.server"
+import {addPost, getUsers, findPostById, findPostBySummary} from "@/app/api/actions/jsonHandler.server"
+import {generateExcerpt, generateUniqueSummary} from "@/app/lib/slugGenerator";
 
 export async function POST(request: Request) {
     try {
@@ -40,32 +41,42 @@ export async function POST(request: Request) {
 }
 
 export async function GET(request: Request) {
+    const { searchParams } = new URL(request.url);
+    const summary = searchParams.get('summary');
+
+    if (!summary) {
+        return NextResponse.json(
+            { error: 'Slug parameter is required' },
+            { status: 400 }
+        );
+    }
+
     try {
-        const url = new URL(request.url)
-        const postId = url.searchParams.get('id')
-
-        if (!postId) {
-            return NextResponse.json(
-                { error: 'ID do post é obrigatório' },
-                { status: 400 }
-            )
-        }
-
-        const post = findPostById(postId)
+        const post = findPostBySummary(summary);
 
         if (!post) {
             return NextResponse.json(
-                { error: 'Post não encontrado' },
+                { error: 'Post not found' },
                 { status: 404 }
-            )
+            );
         }
 
-        return NextResponse.json(post)
+        // Retorna apenas os campos necessários para SEO
+        const seoData = {
+            title: post.title,
+            summary: post.summary || generateExcerpt(post.body), // Fallback se não tiver summary
+            imageUrl: post.imageUrl,
+            body: post.body,
+            tags: post.tags,
+            createdAt: post.createdAt
+        };
+
+        return NextResponse.json(seoData);
 
     } catch (error) {
         return NextResponse.json(
-            { error: 'Erro interno no servidor' },
+            { error: 'Internal server error' },
             { status: 500 }
-        )
+        );
     }
 }

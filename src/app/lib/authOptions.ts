@@ -2,7 +2,6 @@
 import type { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from 'bcryptjs'
-import { findUserByEmail } from "@/app/api/actions/jsonHandler.server"
 
 export const authOptions: NextAuthOptions = {
     providers: [
@@ -13,17 +12,30 @@ export const authOptions: NextAuthOptions = {
                 password: { label: 'Password', type: 'password' }
             },
             async authorize(credentials) {
-                if (!credentials || !credentials?.password) return null
+                const storedHash = process.env.ADMIN_HASHED_PASSWORD!.trim();
+                console.log('Hash armazenado (raw):', storedHash);
+                console.log('Hash length:', storedHash.length);
 
-                const user = findUserByEmail(credentials.email)
-                if (!user || !user.hashedPassword) return null
+                try {
+                    const isEmailMatch = credentials.email.trim() === process.env.ADMIN_EMAIL?.trim();
+                    const isPasswordValid = await bcrypt.compare(
+                        credentials.password,
+                        process.env.ADMIN_HASHED_PASSWORD!.trim()
+                    );
 
-                const isValid = await bcrypt.compare(
-                    credentials.password,
-                    user.hashedPassword
-                )
-                console.log('valid', isValid)
-                return isValid ? user : null
+                    console.log('Email válido:', isEmailMatch);
+                    console.log('Senha válida:', isPasswordValid);
+
+                    return isEmailMatch && isPasswordValid ? {
+                        id: "1",
+                        email: process.env.ADMIN_EMAIL!,
+                        name: "Admin User"
+                    } : null;
+
+                } catch (error) {
+                    console.error('Erro na autenticação:', error);
+                    return null;
+                }
             }
         })
     ],

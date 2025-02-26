@@ -1,10 +1,14 @@
-'use client'
- 
-import { useState } from 'react';
-import Image from 'next/image';
 
+import Image from 'next/image';
+export const metadata = {
+    title: 'Sobre Rafael Murata | Especialista em JavaEE e Arquitetura de Software',
+    description: 'Conheça Rafael Murata, especialista em integrações de software com 10 anos de experiência em Java, AWS e GCP.',
+    keywords: 'JavaEE, AWS, GCP, Arquitetura de Software, Palestrante'
+}
 export default function Book() {
   return (
+      <article className="container mx-auto px-4 py-12">
+
     <div className="flex justify-center items-center h-screen">
       <div className="flex flex-col items-center">
         <Image
@@ -19,5 +23,6 @@ export default function Book() {
         </label>
       </div>
     </div>
+      </article>
   );
 }

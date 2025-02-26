@@ -40,7 +40,7 @@ const IntroSection: React.FC = () => {
     <SectionWrapper>
       <Title>Bem vindo ao meu blog</Title>
       <Subtitle>
-        Explorando ideias e compartilhando conhecimento. Meu blog foi criado em Next.js, MongoDB e Vercel.
+        Explorando ideias e compartilhando conhecimento. Meu blog foi criado em Next.js e Vercel.
       </Subtitle>
         <GitHubLink href="https://github.com/rafaelMurata/meu-blog" target="_blank" rel="noopener noreferrer">
           Github <FaGithub size={24} />
