@@ -1,6 +1,6 @@
 // app/api/posts/route.ts
 import { NextResponse } from 'next/server'
-import {addPost, getUsers, findPostById, findPostBySummary} from "@/app/api/actions/jsonHandler.server"
+import {addPost, findPostById, findPostBySummary} from "@/app/api/actions/jsonHandler.server"
 import {generateExcerpt, generateUniqueSummary} from "@/app/lib/slugGenerator";
 
 export async function POST(request: Request) {
@@ -11,14 +11,6 @@ export async function POST(request: Request) {
             return NextResponse.json(
                 { error: 'Usuário não autenticado' },
                 { status: 401 }
-            )
-        }
-
-        const user = getUsers().find(user => user.id === body.authorId)
-        if (!user) {
-            return NextResponse.json(
-                { error: 'Usuário não encontrado' },
-                { status: 404 }
             )
         }
 

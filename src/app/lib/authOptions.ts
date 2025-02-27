@@ -1,4 +1,3 @@
-// src/lib/authOptions.ts
 import type { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from 'bcryptjs'
@@ -12,12 +11,14 @@ export const authOptions: NextAuthOptions = {
                 password: { label: 'Password', type: 'password' }
             },
             async authorize(credentials) {
+                if (!credentials || !credentials?.password) return null
+
                 const storedHash = process.env.ADMIN_HASHED_PASSWORD!.trim();
                 console.log('Hash armazenado (raw):', storedHash);
                 console.log('Hash length:', storedHash.length);
 
                 try {
-                    const isEmailMatch = credentials.email.trim() === process.env.ADMIN_EMAIL?.trim();
+                    const isEmailMatch = credentials?.email.trim() === process.env.ADMIN_EMAIL?.trim();
                     const isPasswordValid = await bcrypt.compare(
                         credentials.password,
                         process.env.ADMIN_HASHED_PASSWORD!.trim()
@@ -46,19 +47,14 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token.id = user.id;
-                token.email = user.email;
-                token.name = user.name;
+                token.id = user.id
+                token.email = user.email
+                token.name = user.name
             }
-            return token;
+            return token
         },
         async session({ session, token }) {
-            session.user = {
-                id: token.id as string,
-                email: token.email,
-                name: token.name
-            };
-            return session;
+            return { ...session, token: token.accessToken }
         }
     },
     secret: process.env.NEXTAUTH_SECRET

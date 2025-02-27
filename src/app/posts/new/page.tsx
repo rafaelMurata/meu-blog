@@ -17,14 +17,14 @@ export default function NewPostPage() {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        if (!session?.user?.id) {
+        if (!session?.user) {
             console.error('ID do usuário não encontrado na sessão');
             return;
         }
 
         const newPost = {
             ...formData,
-            authorId: session.user.id,
+            authorId: session.user.name,
             createdAt: new Date().toISOString()
         };
 

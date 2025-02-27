@@ -93,7 +93,7 @@ const PostPage = () => {
                         <div className="border rounded-md p-4 mb-4 bg-gray-50 prose prose-sm max-w-4xl text-lg mx-auto">
                             <ReactMarkdown
                                 components={{
-                                    code: ({node, inline, className, children, ...props}) => (
+                                    code: ({node, className, children, ...props}) => (
                                         <code className={className} {...props}>
                                             {children}
                                         </code>
