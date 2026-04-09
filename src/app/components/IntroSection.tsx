@@ -1,51 +1,79 @@
-"use client"
+import Link from 'next/link';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
-import React from 'react';
-import styled from 'styled-components';
-import { FaGithub } from 'react-icons/fa';
+const highlights = [
+  '10+ anos em arquitetura e engenharia de software',
+  '2 anos recentes com atuação freelancer de alto impacto',
+  'Experiência prática em Java, AWS, GCP e sistemas distribuídos',
+  'Contribuições open-source com PRs aprovados no ecossistema Google'
+];
 
-const SectionWrapper = styled.div`
-  background-image: url('/images/grid-18px-masked.png');
-  background-repeat: repeat;
-  padding: 3rem 0;
-  text-align: center;
-  color: #134471;
-`;
-
-const Title = styled.h1`
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-`;
-
-const Subtitle = styled.p`
-  font-size: 1.25rem;
-  opacity: 0.8;
-  display: flex; /* Adicione display flex para alinhar horizontalmente */
-  align-items: center; /* Centralize verticalmente o texto e o ícone */
-  justify-content: center; /* Centralize horizontalmente o texto e o ícone */
-  flex-wrap: wrap; /* Se o conteúdo for muito longo, ele pode quebrar para a próxima linha */
-`;
-
-const GitHubLink = styled.a`
-  display: inline-flex; /* Use inline-flex para colocar o ícone e o texto em linha */
-  align-items: center; /* Centralize verticalmente o ícone e o texto */
-  text-decoration: none;
-  color: #134471;
-  margin-left: 0.5rem; /* Adicione um espaço à esquerda entre o texto e o ícone */
-`;
-
-const IntroSection: React.FC = () => {
+const IntroSection = () => {
   return (
-    <SectionWrapper>
-      <Title>Bem vindo ao meu blog</Title>
-      <Subtitle>
-        Explorando ideias e compartilhando conhecimento. Meu blog foi criado em Next.js e Vercel.
-      </Subtitle>
-        <GitHubLink href="https://github.com/rafaelMurata/meu-blog" target="_blank" rel="noopener noreferrer">
-          Github <FaGithub size={24} />
-        </GitHubLink>
-    </SectionWrapper>
+    <section className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white/90 p-8 shadow-xl shadow-slate-200/70 backdrop-blur md:p-12">
+      <div className="absolute -right-28 -top-28 h-60 w-60 rounded-full bg-blue-100 blur-3xl" />
+      <div className="absolute -left-28 bottom-0 h-60 w-60 rounded-full bg-cyan-100 blur-3xl" />
+
+      <div className="relative z-10 grid gap-10 lg:grid-cols-[2fr_1fr] lg:items-end">
+        <div>
+          <p className="mb-4 inline-flex rounded-full border border-blue-200 bg-blue-50 px-4 py-1 text-xs font-semibold uppercase tracking-[0.24em] text-blue-700">
+            Portfólio Freelancer & Arquitetura Java
+          </p>
+
+          <h1 className="text-3xl font-black leading-tight text-slate-900 md:text-5xl">
+            Eu projeto e evoluo plataformas robustas para escalar produtos digitais.
+          </h1>
+
+          <p className="mt-6 max-w-3xl text-base leading-relaxed text-slate-600 md:text-lg">
+            Sou Rafael Murata, especialista em JavaEE e arquitetura de software. Esta vitrine foi modernizada para
+            mostrar minha trajetória, projetos relevantes e a forma como entrego valor como freelancer para negócios
+            que precisam de performance, segurança e confiabilidade.
+          </p>
+
+          <ul className="mt-8 grid gap-3 text-sm text-slate-700 md:grid-cols-2">
+            {highlights.map((highlight) => (
+              <li key={highlight} className="flex items-start gap-2 rounded-xl border border-slate-200 bg-slate-50 p-3">
+                <span className="mt-2 h-2 w-2 rounded-full bg-blue-600" />
+                <span>{highlight}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="relative z-10 rounded-2xl border border-slate-200 bg-slate-900 p-6 text-slate-100 shadow-2xl shadow-slate-300/60">
+          <p className="text-xs uppercase tracking-[0.2em] text-cyan-300">Disponível para projetos</p>
+          <p className="mt-3 text-2xl font-bold">Freelancer backend & arquitetura</p>
+          <p className="mt-3 text-sm leading-relaxed text-slate-300">
+            Atuação hands-on em migração de APIs, modernização de monolitos, observabilidade e desenho de sistemas em
+            nuvem.
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Link
+              href="/about"
+              className="rounded-lg bg-cyan-400 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-cyan-300"
+            >
+              Ver trajetória
+            </Link>
+            <Link
+              href="mailto:rafael.murata@gmail.com"
+              className="rounded-lg border border-slate-500 px-4 py-2 text-sm font-semibold transition hover:border-cyan-300 hover:text-cyan-200"
+            >
+              Falar sobre projeto
+            </Link>
+          </div>
+
+          <div className="mt-6 flex items-center gap-4 text-slate-300">
+            <Link href="https://linkedin.com/in/rafaelmurata" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300">
+              <FaLinkedin size={20} />
+            </Link>
+            <Link href="https://github.com/rafaelMurata" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300">
+              <FaGithub size={20} />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 
